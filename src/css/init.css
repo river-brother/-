@@ -5,3 +5,10 @@ body {
     margin: 0;
     height: 100%;
 }
+
+body, div, ul, li, ol, dl, dd, dt, p, h1, h2, h3, form, input, span, img{ margin:0; padding:0; box-sizing: border-box;}
+li{list-style: none;}
+a{text-decoration: none;}
+img{border: none;}
+input{outline:none;}
+
