@@ -1,7 +1,8 @@
 
 <template>
   <div id="app">
-    <el-container>
+    <router-view v-if="$route.path == '/login'"/>
+    <el-container v-if="$route.path != '/login'">
 
       <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :router="true">
         <template v-for="(menu,index) in menus">
@@ -11,13 +12,13 @@
               <i v-if="menu.icon" :class="menu.icon"></i>
               <span slot="title">{{ menu.name }}</span>
             </template>
-            <el-menu-item v-for="item in menu.sub" :index="item.path">
+            <el-menu-item v-for="(item,index) in menu.sub" :key="index" :index="item.path">
               <i v-if="item.icon" :class="item.icon"></i>
               <span slot="title">{{ item.name }}</span>
             </el-menu-item>
           </el-submenu>
 
-          <el-menu-item :key="index + 'x'" v-if="!menu.sub" :index="menu.path">
+          <el-menu-item :key="index" v-if="!menu.sub" :index="menu.path">
             <i v-if="menu.icon" :class="menu.icon"></i>
             <span slot="title" index="/leave">{{ menu.name }}</span>
             <!--<el-menu-item index="1">{{ menu.name }}</el-menu-item>-->
@@ -35,12 +36,6 @@
       </el-container>
 
     </el-container>
-    <!--<div id="modal1" class="modal">-->
-      <!--<p class="closeBtn">Close</p>-->
-      <!--<h2>Your Content Here</h2>-->
-    <!--</div>-->
-
-
   </div>
 </template>
 
