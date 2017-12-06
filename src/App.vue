@@ -26,9 +26,19 @@
 
         </template>
       </el-menu>
-
+			
       <el-container>
-        <el-header></el-header>
+        <el-header>
+        	<el-dropdown @command="handleCommand">
+  					<span class="el-dropdown-link">
+    					您好:   {{user}}
+    					<i class="el-icon-arrow-down el-icon--right"></i>
+  					</span>
+	 					<el-dropdown-menu slot="dropdown">
+	    				<el-dropdown-item command="a">退出</el-dropdown-item>
+	 					</el-dropdown-menu>
+					</el-dropdown>
+        </el-header>
         <el-main><router-view/></el-main>
         <el-footer></el-footer>
       </el-container>
@@ -43,6 +53,7 @@ export default {
   name: 'app',
   data () {
     return {
+    	user: '用户名',
       menus: [
         {name: '首页', path: '/', icon: 'el-icon-location'},
         {
@@ -89,27 +100,36 @@ export default {
 }
 .el-header{
   line-height: 60px;
-}
-  .el-header h3 a{
-    display: block;
-    float: right;
-    padding-right: 100px;
-    color: white!important;
-  }
+  color: white;
 
-  .black_overlay{
-    display: none;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index:1001;
-    -moz-opacity: 0.8;
-    opacity:.80;
-    filter: alpha(opacity=88);
-  }
+}
+.el-header .el-dropdown{
+	float: right;
+}
+.el-header .el-dropdown-link{
+	color: white;
+}
+.el-header #exit{
+	border: none;
+	width: 30px;
+	height: 30px;
+	color: white;
+	background: #878D99;
+	float: right;
+}
+.black_overlay{
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	z-index:1001;
+	-moz-opacity: 0.8;
+	opacity:.80;
+	filter: alpha(opacity=88);
+}
   .white_content {
     display: none;
     position: absolute;
