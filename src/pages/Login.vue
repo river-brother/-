@@ -2,8 +2,8 @@
   <div class="login">
     <div class="main">
       <h2>用户登录</h2>
-      <p><span>用户 :</span><input type="text" placeholder="用户" class="name"/></p>
-      <p><span>密码 :</span><input type="password" placeholder="密码" class="pawd"/></p>
+      <p><span>名称</span><input type="text" placeholder="请填写用户名" class="name"/></p>
+      <p><span>密码</span><input type="password" placeholder="请填写密码" class="pawd"/></p>
       <input type="submit" value="提    交" class="but" @click="inputChange"/>
     </div>
     <div id="lightbox"></div>
@@ -11,24 +11,25 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
 
-      }
-    },
-    mounted () {
-      this.getData()
-    },
-    methods: {
-      getData: function () {
+export default {
+  data () {
+    return {
 
-      },
-      inputChange () {
-        // window.location.href = "/app.vue";
-      }
+    }
+  },
+  mounted () {
+    this.getData()
+  },
+  methods: {
+    getData: function () {
+
+    },
+    inputChange () {
+      // window.location.href = "/app.vue";
     }
   }
+}
 </script>
 <style>
   .login .main{
@@ -36,20 +37,21 @@
     height: 300px;
     position: absolute;
     border: 1px solid #cccccc;
-    margin: 250px auto;
+    margin: auto;
+    top: 200px;
   }
   .login #lightbox {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     background-color: #000;
-    opacity: .6;
+    opacity: .5;
   }
   .login .main{
     position: relative;
-    background-color: #fff;
+    background: white;
     z-index: 1;
   }
   .login h2{
@@ -58,12 +60,12 @@
     margin-bottom: 20px;
   }
   .login input{
-     width: 200px;
+    width: 200px;
     height: 40px;
   }
   .login .but{
     width: 150px;
-    background: red;
+    background: blue;
     border: none;
     border-radius: 10px;
   }

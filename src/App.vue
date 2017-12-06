@@ -28,9 +28,7 @@
       </el-menu>
 
       <el-container>
-        <el-header>
-
-        </el-header>
+        <el-header></el-header>
         <el-main><router-view/></el-main>
         <el-footer></el-footer>
       </el-container>
@@ -40,35 +38,35 @@
 </template>
 
 <script>
-  // import $ from 'jquery';
+
 export default {
-    name: 'app',
-    data () {
-      return {
-        menus: [
-          {name: '首页', path: '/app', icon: 'el-icon-location'},
-          {
-            name: '留言管理',
-            icon: 'el-icon-location',
-            sub: [
-              {
-                name: '留言',
-                icon: 'el-icon-location',
-                path: '/leave'
-              }
-            ]
-          }
-        ]
-      }
-    },
-    methods: {
-      handleOpen (key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose (key, keyPath) {
-        console.log(key, keyPath)
-      }
+  name: 'app',
+  data () {
+    return {
+      menus: [
+        {name: '首页', path: '/', icon: 'el-icon-location'},
+        {
+          name: '留言管理',
+          icon: 'el-icon-location',
+          sub: [
+            {
+              name: '留言',
+              icon: 'el-icon-location',
+              path: '/leave'
+            }
+          ]
+        }
+      ]
     }
+  },
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
+    }
+  }
 }
 </script>
 

@@ -1,17 +1,24 @@
 <template>
   <div id="leave">
 
-    <el-table :data="tableData" border style="width: 100%;">
-      <el-table-column prop="name" label="姓名" width="100" ></el-table-column>
-      <el-table-column prop="phone" label="电话" width="150"></el-table-column>
-      <el-table-column prop="leave" label="留言" width="800" @click="enter" title="value"></el-table-column>
-      <el-table-column label="操作" width="100">
+    <el-table :data="tableData" border class="big">
+      <el-table-column prop="name" label="姓名" min-width="100" ></el-table-column>
+      <el-table-column prop="phone" label="电话" min-width="150"></el-table-column>
+      <el-table-column prop="leave" label="留言" min-width="800" @click="enter" title="value"></el-table-column>
+      <el-table-column label="操作" min-width="100">
         <template slot-scope="scope" >
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next" :total="1000">
+
+    <!--分页器-->
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="1000"
+      page-size="10"
+    >
 
     </el-pagination>
   </div>
@@ -76,7 +83,6 @@
 <style>
 
   .el-table .cell{
-  width: 800px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow: ellipsis;
@@ -87,5 +93,6 @@
   background: red;
   z-index: 1000;
 }
+
 
 </style>
