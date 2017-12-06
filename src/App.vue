@@ -6,7 +6,7 @@
       <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :router="true">
         <template v-for="(menu,index) in menus">
 
-          <el-submenu v-if="menu.sub" :index="index.toString()">
+          <el-submenu :key="index" v-if="menu.sub" :index="index.toString()" style="width: 200px">
             <template slot="title">
               <i v-if="menu.icon" :class="menu.icon"></i>
               <span slot="title">{{ menu.name }}</span>
@@ -17,7 +17,7 @@
             </el-menu-item>
           </el-submenu>
 
-          <el-menu-item v-if="!menu.sub" :index="menu.path">
+          <el-menu-item :key="index + 'x'" v-if="!menu.sub" :index="menu.path">
             <i v-if="menu.icon" :class="menu.icon"></i>
             <span slot="title" index="/leave">{{ menu.name }}</span>
             <!--<el-menu-item index="1">{{ menu.name }}</el-menu-item>-->
@@ -28,11 +28,7 @@
 
       <el-container>
         <el-header>
-          <h3><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">登录</a></h3>
-          <div id="light" class="white_content">
-           <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a>
-          </div>
-          <div id="fade" class="black_overlay"></div>
+
         </el-header>
         <el-main><router-view/></el-main>
         <el-footer></el-footer>
@@ -44,20 +40,18 @@
       <!--<h2>Your Content Here</h2>-->
     <!--</div>-->
 
+
   </div>
 </template>
 
 <script>
-
-  import $ from 'jquery';
-
-
+  // import $ from 'jquery';
 export default {
     name: 'app',
     data () {
       return {
         menus: [
-          {name: '首页', path: '/', icon: 'el-icon-location'},
+          {name: '首页', path: '/app', icon: 'el-icon-location'},
           {
             name: '留言管理',
             icon: 'el-icon-location',
@@ -72,15 +66,14 @@ export default {
         ]
       }
     },
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    methods: {
+      handleOpen (key, keyPath) {
+        console.log(key, keyPath)
+      },
+      handleClose (key, keyPath) {
+        console.log(key, keyPath)
+      }
     }
-  },
-
 }
 </script>
 
