@@ -2,9 +2,26 @@
   <div class="login">
     <div class="main">
       <h2>用户登录</h2>
-      <p><span>名称</span><input type="text" placeholder="请填写用户名" class="name"/></p>
-      <p><span>密码</span><input type="password" placeholder="请填写密码" class="pawd"/></p>
-      <input type="submit" value="提    交" class="but" @click="inputChange"/>
+      <div>
+        <span>账号: </span>
+        <!--<input type="text" placeholder="请填写用户名" id="name" v-model.trim="name"/>-->
+        <el-input
+          placeholder="请输入用户名"
+          prefix-icon="el-icon-search"
+          v-model="username">
+        </el-input>
+      </div>
+      <div>
+        <span>密码: </span>
+        <!--<input type="password" placeholder="请填写密码" id="pawd" v-model.trim="password"/>-->
+        <el-input
+          placeholder="请输入密码"
+          prefix-icon="el-icon-search"
+          v-model="password">
+        </el-input>
+      </div>
+      <!--<input type="submit" value="提    交" id="but" @click="butChang"/>-->
+      <el-button type="primary" @click="butChang">登    录</el-button>
     </div>
     <div id="lightbox"></div>
   </div>
@@ -15,22 +32,48 @@
 export default {
   data () {
     return {
-
+      username: '',
+      password: ''
     }
   },
   mounted () {
-    this.getData()
+
   },
   methods: {
-    getData: function () {
+    butChang () {
+      var formData = {}
+      formData.username = this.username
+      formData.password = this.password
+      formData.grant_type = 'password'
+      formData.client_id = 2
+      formData.client_secret = 'yuCoXKPmYy2uEsRgnPqRyfyVMaLjHaULXxgZGxPB'
 
-    },
-    inputChange () {
-      // window.location.href = "/app.vue";
+      var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
+      if (!reg.test(this.username)) {
+        alert('邮箱格式不正确')
+      } else if (this.password.length < 6) {
+        alert('密码不能小于6位')
+      }
+      // this.$http.post({
+      //   method: 'POST',
+      //   url: 'http://120.78.145.150:8080/oauth/token',
+      //   data: 'formData'
+      // })
+      this.$http.post('http://120.78.145.150:8080/oauth/token', formData).then((success) => {
+        if (status = 200) {
+          window.location.href = '/index'
+        }
+      }, (error) => {
+        if (status = 401) {
+          alert('账号密码错误')
+        }
+      })
     }
   }
 }
 </script>
+
+
 <style>
   .login .main{
     width: 300px;
@@ -39,6 +82,7 @@ export default {
     border: 1px solid #cccccc;
     margin: auto;
     top: 200px;
+    text-align: center;
   }
   .login #lightbox {
     position: absolute;
@@ -59,30 +103,11 @@ export default {
     margin-top: 20px;
     margin-bottom: 20px;
   }
-  .login input{
+  .login .el-input{
     width: 200px;
-    height: 40px;
-  }
-  .login .but{
-    width: 150px;
-    background: blue;
-    border: none;
-    border-radius: 10px;
-  }
-  .login .main{
-    text-align: center;
-  }
-  .login .main p span{
-    margin-right: 5px;
-  }
-  .login .main p{
     margin-top: 20px;
   }
-  .login .main .but{
-    margin-top: 50px;
-    color: white;
-  }
-  .login .name,.pawd{
-    padding-left: 5px;
+  .login .el-button{
+    margin-top: 30px;
   }
 </style>

@@ -4,7 +4,7 @@
     <router-view v-if="$route.path == '/login'"/>
     <el-container v-if="$route.path != '/login'">
 
-      <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :router="true">
+      <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :router="true">
         <template v-for="(menu,index) in menus">
 
           <el-submenu :key="index" v-if="menu.sub" :index="index.toString()" style="width: 200px">
@@ -26,16 +26,16 @@
 
         </template>
       </el-menu>
-			
+
       <el-container>
         <el-header>
-        	<el-dropdown @command="handleCommand">
+        	<el-dropdown>
   					<span class="el-dropdown-link">
-    					您好:   {{user}}
+    					  您好:    {{user}}
     					<i class="el-icon-arrow-down el-icon--right"></i>
   					</span>
 	 					<el-dropdown-menu slot="dropdown">
-	    				<el-dropdown-item command="a">退出</el-dropdown-item>
+	    				<el-dropdown-item @click.native="secedeChange">注销</el-dropdown-item>
 	 					</el-dropdown-menu>
 					</el-dropdown>
         </el-header>
@@ -53,7 +53,7 @@ export default {
   name: 'app',
   data () {
     return {
-    	user: '用户名',
+      user: '用户名',
       menus: [
         {name: '首页', path: '/', icon: 'el-icon-location'},
         {
@@ -71,17 +71,22 @@ export default {
     }
   },
   methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
+    secedeChange (token) {
+      localStorage.removeItem('token')
+      window.location.href = '/'
     }
   }
 }
 </script>
 
 <style>
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
   .menu{
     width: 200px;
   }

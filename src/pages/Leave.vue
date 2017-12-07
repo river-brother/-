@@ -17,7 +17,10 @@
       background
       layout="prev, pager, next"
       :total="1000"
-      page-size="10"
+      :page-size="10"
+      :current-page="currentPager"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
     >
 
     </el-pagination>
@@ -30,7 +33,14 @@
     name: 'leave',
     data: function () {
       return {
-        pagesize: 1,
+        filterData:[],
+        pageData:[],
+        formLabelWidth: '50px', //添加数据弹框label标签宽度
+        dialogFormVisible: false, //控制添加数据的弹框显示关闭
+        total:0,
+        pageNum:1,
+        currentPager:1,
+        pageSize:10,
         tableData: [
           {
             name: '小强',
@@ -51,48 +61,67 @@
           },
           {
             name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
+          },
+          {
+            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
+          },
+          {
+            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
+          },
+          {
+            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
+          }, {
+            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
+          }
+          , {
+            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
+          },
+          {
+            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
           }
         ]
       }
     },
     methods: {
-    //   handleDelete: function(index, row) {
-    //     var array = [];
-    //     array.push(row.id);
-    //     this.$http.post('newstu/delete',{"array":array},{emulateJSON: true}).then(function(res){
-    //       this.loadData(this.criteria, this.currentPage, this.pagesize);
-    //     },function(){
-    //       console.log('failed');
-    //     });
-    //   },
-    //   enter: function(){
-    //     this.message = '修改值';
-    //   },
-    //   leave: function(){
-    //     this.message = '默认值';
-    //   }
-    //   $(".cell")
-
-      enter () {
-        // $('.el-table .cell').addClass($('.box'))
-      }
+      // 删除
+      handleDelete (index, row) {
+        this.tableData.splice(index, 1)
+      },
+      // handleSizeChange(page){
+      //   this.pageNum = page;
+      // },
+      // handleCurrentChange(page){
+      //   var num = page * this.pageSize;
+      //   this.currentPager = page;
+      //   this.total = this.filterData.length;
+      //   this.pageData = this.filterData.slice(num-this.pageSize,num);
+      // },
+      // // 初始化显示第一页数据
+      // created(){
+      //   this.filterData = this.tableData;
+      //   this.handleCurrentChange(1);
+      //
+      // }
     }
   }
 </script>
 
 <style>
 
-  .el-table .cell{
+  #leave .el-table .cell{
   white-space:nowrap;
   overflow:hidden;
   text-overflow: ellipsis;
 }
-.box{
+  #leave .box{
   width: 200px;
   height: 200px;
   background: red;
   z-index: 1000;
 }
-
+ #leave .el-pagination{
+  float: right;
+   margin-top: 10px;
+}
 
 </style>

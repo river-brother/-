@@ -3,23 +3,25 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import $ from 'jquery'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './css/init.css'
 import '../src/js/app'
 
-// var token = window.localStorage.getItem("token")
-// router.beforeEach((to, from, next) => {
-//   if (to.path !== '/login' && (!localStorage.getItem('token') || localStorage.getItem('token') === 'undefined')) {
-//     next({
-//       path: '/login'
-//     })
-//   } else {
-//     next()
-//   }
-// })
+import VueResource from 'vue-resource'
 
+// var token = window.localStorage.getItem("token")
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login' && (!localStorage.getItem('token') || localStorage.getItem('token') === 'undefined')) {
+    next({
+      path: '/login'
+    })
+  } else {
+    next()
+  }
+})
+
+Vue.use(VueResource)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
