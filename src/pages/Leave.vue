@@ -33,14 +33,14 @@
     name: 'leave',
     data: function () {
       return {
-        filterData:[],
-        pageData:[],
-        formLabelWidth: '50px', //添加数据弹框label标签宽度
-        dialogFormVisible: false, //控制添加数据的弹框显示关闭
-        total:0,
-        pageNum:1,
-        currentPager:1,
-        pageSize:10,
+        filterData: [],
+        pageData: [],
+        formLabelWidth: '50px', // 添加数据弹框label标签宽度
+        dialogFormVisible: false, // 控制添加数据的弹框显示关闭
+        total: 0,
+        pageNum: 1,
+        currentPager: 1,
+        pageSize: 10,
         tableData: [
           {
             name: '小强',
@@ -72,8 +72,8 @@
             name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
           }, {
             name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          }
-          , {
+          },
+          {
             name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
           },
           {
@@ -86,7 +86,7 @@
       // 删除
       handleDelete (index, row) {
         this.tableData.splice(index, 1)
-      },
+      }
       // handleSizeChange(page){
       //   this.pageNum = page;
       // },

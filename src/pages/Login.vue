@@ -60,11 +60,15 @@ export default {
       //   data: 'formData'
       // })
       this.$http.post('http://120.78.145.150:8080/oauth/token', formData).then((success) => {
-        if (status = 200) {
-          window.location.href = '/index'
+        // console.log(success.status === 200)
+        if (success.status === 200) {
+          localStorage.setItem('token', success.body.data.access_token)
+          this.$router.push({ name: 'index' })
+          // path: '/index'
         }
       }, (error) => {
-        if (status = 401) {
+      // console.log(error.status)
+        if (error.status === 401) {
           alert('账号密码错误')
         }
       })
