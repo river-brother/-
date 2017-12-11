@@ -31,11 +31,11 @@
         <el-header>
         	<el-dropdown>
   					<span class="el-dropdown-link">
-    					  您好:    {{user}}
+    					  您好:    {{userName}}
     					<i class="el-icon-arrow-down el-icon--right"></i>
   					</span>
 	 					<el-dropdown-menu slot="dropdown">
-	    				<el-dropdown-item @click.native="secedeChange">注销</el-dropdown-item>
+	    				<el-dropdown-item @click.native="logout">注销</el-dropdown-item>
 	 					</el-dropdown-menu>
 					</el-dropdown>
         </el-header>
@@ -53,7 +53,7 @@ export default {
   name: 'app',
   data () {
     return {
-      user: '用户名',
+      user: '',
       menus: [
         {name: '首页', path: '/', icon: 'el-icon-location'},
         {
@@ -70,10 +70,26 @@ export default {
       ]
     }
   },
+  ready () {
+
+  },
+  computed: {
+    userName: function () {
+      if (localStorage.getItem('userName') && typeof localStorage.getItem('userName') !== 'undefined') {
+        return localStorage.getItem('userName')
+      } else {
+        return '未知'
+      }
+    }
+  },
+  mounted () {
+  },
   methods: {
-    secedeChange (token) {
+    logout (token) {
+      localStorage.removeItem('userName')
       localStorage.removeItem('token')
-      window.location.href = '/'
+      // window.location.href = '/'
+      this.$router.push({name: 'login'})
     }
   }
 }

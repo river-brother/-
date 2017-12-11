@@ -1,127 +1,149 @@
 <template>
-  <div id="leave">
+  <div class="leave">
+    <div>
+      <!-- 列表 -->
+      <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="name" label="姓名" width="80"></el-table-column>
+        <el-table-column prop="phone" label="电话" width="150"></el-table-column>
+        <el-table-column prop="content" label="留言"></el-table-column>
+        <el-table-column operation="操作" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <el-table :data="tableData" border class="big">
-      <el-table-column prop="name" label="姓名" min-width="100" ></el-table-column>
-      <el-table-column prop="phone" label="电话" min-width="150"></el-table-column>
-      <el-table-column prop="leave" label="留言" min-width="800" @click="enter" title="value"></el-table-column>
-      <el-table-column label="操作" min-width="100">
-        <template slot-scope="scope" >
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+      <!-- 分页 -->
+      <!--page-size	每页显示条目个数-->
+      <!--page-count-->
+      <el-row :gutter="20">
+        <el-col :span="12" :offset="9">
+          <div class="block">
+            <el-pagination
+              layout="prev, pager, next"
+              :page-size="parseInt(size)"
+              :total="total"
+              @current-change="pageChange"
+            >
+            </el-pagination>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
 
-    <!--分页器-->
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="1000"
-      :page-size="10"
-      :current-page="currentPager"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    >
-
-    </el-pagination>
   </div>
-
 </template>
 
 <script>
-  export default{
+  import QueryString from 'query-string'
+
+  export default {
     name: 'leave',
-    data: function () {
+    data() {
       return {
-        filterData: [],
-        pageData: [],
-        formLabelWidth: '50px', // 添加数据弹框label标签宽度
-        dialogFormVisible: false, // 控制添加数据的弹框显示关闭
-        total: 0,
-        pageNum: 1,
-        currentPager: 1,
-        pageSize: 10,
-        tableData: [
-          {
-            name: '小强',
-            phone: 15828111204,
-            leave: '<router-link> 组件支持用户在具有路由功sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss'
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          }, {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          },
-          {
-            name: '小强', phone: 15828111204, leave: '<router-link> 组件支持用户在具有路由功能的应用中 '
-          }
-        ]
+        form: {   // 添加列表时,初始化数据
+          name: '',
+          phone: '',
+          content: ''
+        },
+        total: 0,  // 总页数
+        size: 0,   // 每页显示条目个数
+        orgData: [],
+        num: 0,
+        query: {
+          page: 1,
+          size: 15
+        }
+      }
+    },
+    computed: {
+      tableData: {   // 重新发送请求渲染模板
+        get: function () {
+          return this.orgData
+        },
+        set: function (newValue) {
+          this.orgData = newValue
+        }
       }
     },
     methods: {
-      // 删除
-      handleDelete (index, row) {
-        this.tableData.splice(index, 1)
+      handleDelete: function (index, data) {
+        this.$http.delete('message-board/' + data.id).then(
+          (success) => {
+            this.getData()
+            this.$message({
+              showClose: true,
+              message: '删除成功',
+              type: 'success'
+            })
+          },
+        (error) => {
+          console.log(error)
+          this.$message('删除失败')
+        })
+      },
+      getData: function () {
+        this.$http.get('message-board?' + QueryString.stringify(this.query)).then((success) => {
+          if (success.status === 200) {
+            // console.log(success)
+            // console.log(this.tableData)
+            this.tableData = success.body.data
+            this.size = success.body.per_page   // 每页记录数 15
+            this.total = success.body.total   // 总页数 16
+          }
+        }, (error) => {
+          if (error.status !== 200) {
+            alert('请求失败')
+          }
+        })
+      },
+      pageChange: function (r) {
+        this.query.page = r
+        this.getData()
       }
-      // handleSizeChange(page){
-      //   this.pageNum = page;
-      // },
-      // handleCurrentChange(page){
-      //   var num = page * this.pageSize;
-      //   this.currentPager = page;
-      //   this.total = this.filterData.length;
-      //   this.pageData = this.filterData.slice(num-this.pageSize,num);
-      // },
-      // // 初始化显示第一页数据
-      // created(){
-      //   this.filterData = this.tableData;
-      //   this.handleCurrentChange(1);
-      //
+      // handleDelete (index, data) {
+      //   console.log(data)
       // }
+    },
+    mounted () {
+      console.log(QueryString.stringify({foo: 'bar'}))
+      this.getData()
     }
   }
 </script>
 
 <style>
+  .box {
+    width: 500px;
+  }
 
-  #leave .el-table .cell{
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow: ellipsis;
-}
-  #leave .box{
-  width: 200px;
-  height: 200px;
-  background: red;
-  z-index: 1000;
-}
- #leave .el-pagination{
-  float: right;
-   margin-top: 10px;
-}
+  .el-form-item__label {
+    line-height: 20px;
+    font-size: 16px;
+  }
 
+  .add_btn {
+    float: right;
+  }
+
+  .el-dialog--small {
+    max-width: 500px;
+  }
+
+  .el-dialog__body {
+    padding-bottom: 0;
+  }
+
+  .el-form-item {
+    margin-bottom: 0;
+  }
+
+  .el-row {
+    margin-bottom: 20px;
+  }
+
+  .el-pagination {
+    margin-top: 10px;
+  }
 </style>
+

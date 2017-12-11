@@ -10,7 +10,6 @@ import '../src/js/app'
 
 import VueResource from 'vue-resource'
 
-// var token = window.localStorage.getItem("token")
 router.beforeEach((to, from, next) => {
   if (to.path !== '/login' && (!localStorage.getItem('token') || localStorage.getItem('token') === 'undefined')) {
     next({
@@ -24,6 +23,15 @@ router.beforeEach((to, from, next) => {
 Vue.use(VueResource)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+
+Vue.http.interceptors.push(function (request, next) {
+  if (localStorage.getItem('token') && typeof localStorage.getItem('token') !== 'undefined') {
+    request.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+  }
+  next()
+})
+
+Vue.http.options.root = 'http://120.78.145.150:8080/api'
 
 /* eslint-disable no-new */
 new Vue({

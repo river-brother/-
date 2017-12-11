@@ -21,7 +21,7 @@
         </el-input>
       </div>
       <!--<input type="submit" value="提    交" id="but" @click="butChang"/>-->
-      <el-button type="primary" @click="butChang">登    录</el-button>
+      <el-button type="primary" @click="login">登    录</el-button>
     </div>
     <div id="lightbox"></div>
   </div>
@@ -36,11 +36,26 @@ export default {
       password: ''
     }
   },
-  mounted () {
-
-  },
+  // mounted () {
+  //   this.$http.get('http://120.78.145.150:8080/oauth/token').then((success) => {
+  //     console.log(success.data)
+  //
+  //   }, (error) => {
+  //
+  //   })
+  // },
   methods: {
-    butChang () {
+    getUser: function () {
+      this.$http.get('http://120.78.145.150:8080/api/user').then((success) => {
+        // console.log(success)
+        localStorage.setItem('userName', success.body.data.name)
+      }, (error) => {
+        if (error.status !== 200) {
+          alert('请求失败')
+        }
+      })
+    },
+    login () {
       var formData = {}
       formData.username = this.username
       formData.password = this.password
@@ -54,17 +69,12 @@ export default {
       } else if (this.password.length < 6) {
         alert('密码不能小于6位')
       }
-      // this.$http.post({
-      //   method: 'POST',
-      //   url: 'http://120.78.145.150:8080/oauth/token',
-      //   data: 'formData'
-      // })
       this.$http.post('http://120.78.145.150:8080/oauth/token', formData).then((success) => {
-        // console.log(success.status === 200)
+        // console.log(success)
         if (success.status === 200) {
           localStorage.setItem('token', success.body.data.access_token)
+          this.getUser()
           this.$router.push({ name: 'index' })
-          // path: '/index'
         }
       }, (error) => {
       // console.log(error.status)
