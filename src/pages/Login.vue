@@ -74,7 +74,9 @@ export default {
         if (success.status === 200) {
           localStorage.setItem('token', success.body.data.access_token)
           this.getUser()
-          this.$router.push({ name: 'index' })
+          setTimeout(() => {
+            this.$router.push({ name: 'index' })
+          }, 500)
         }
       }, (error) => {
       // console.log(error.status)
