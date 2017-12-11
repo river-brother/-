@@ -39,7 +39,7 @@
 
   export default {
     name: 'leave',
-    data() {
+    data () {
       return {
         form: {   // 添加列表时,初始化数据
           name: '',
@@ -106,7 +106,7 @@
       // }
     },
     mounted () {
-      console.log(QueryString.stringify({foo: 'bar'}))
+      // console.log(QueryString.stringify({foo: 'bar'}))
       this.getData()
     }
   }
