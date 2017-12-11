@@ -15,6 +15,7 @@
         <span>密码: </span>
         <!--<input type="password" placeholder="请填写密码" id="pawd" v-model.trim="password"/>-->
         <el-input
+          type="password"
           placeholder="请输入密码"
           prefix-icon="el-icon-search"
           v-model="password">
